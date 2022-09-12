@@ -3,6 +3,7 @@ import com.healthmarketscience.sqlbuilder.CreateTableQuery;
 import com.healthmarketscience.sqlbuilder.dbspec.basic.*;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import org.json.simple.*;
@@ -25,7 +26,9 @@ public class Main {
         }
 
         //CODE TO WRITE TO TEXT FILE
-
+        String OutputFileName = "sqlScript.txt";
+        PrintWriter out = new PrintWriter(OutputFileName);
+        //out used below
 
 
 
@@ -53,7 +56,10 @@ public class Main {
         String createCustomerTable =
                 new CreateTableQuery(customerTable, true)
                         .validate().toString();
+
         System.out.println(createCustomerTable);
+        //write to output file
+        out.println(createCustomerTable);
 
         // => CREATE TABLE customer (cust_id number,name varchar(255))
 
@@ -61,7 +67,9 @@ public class Main {
                 new CreateTableQuery(orderTable, true)
                         .validate().toString();
         System.out.println(createOrderTable);
-
+        //write to output file
+        out.println(createOrderTable);
+        out.close();
         // => CREATE TABLE order (order_id number,cust_id number,total number,order_date timestamp)
     }
 }

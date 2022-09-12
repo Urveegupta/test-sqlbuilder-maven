@@ -1,0 +1,2 @@
+CREATE TABLE customer (cust_id number,name varchar(255))
+CREATE TABLE order (order_id number,cust_id number,total number,order_date timestamp)
