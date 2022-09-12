@@ -1,9 +1,33 @@
 package org.example;
 import com.healthmarketscience.sqlbuilder.CreateTableQuery;
 import com.healthmarketscience.sqlbuilder.dbspec.basic.*;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.List;
 
+import org.json.simple.*;
+import org.json.simple.parser.*;
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ParseException {
+
+        // CODE TO PARSE JSON FILE
+        JSONParser parser = new JSONParser();
+        String InputFilePath = "input.json";
+        JSONObject jsonObject = (JSONObject)parser.parse(new FileReader(InputFilePath));
+        List roles = (List) jsonObject.get("ROLES");
+        for(Object role:roles){
+            System.out.println(role.toString());
+        }
+
+        List forms = (List) jsonObject.get("FORMS");
+        for(Object form:forms){
+            System.out.println(form.toString());
+        }
+
+        //CODE TO WRITE TO TEXT FILE
+
+
+
 
         // create default schema
         DbSpec spec = new DbSpec();
