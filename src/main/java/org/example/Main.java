@@ -18,9 +18,9 @@ public class Main {
         JSONObject jsonObject = (JSONObject)parser.parse(new FileReader(InputFilePath));
         System.out.println(jsonObject.toString());
         List<JSONObject> roles = (List<JSONObject>) jsonObject.get("Roles");
-         for(JSONObject role:roles){
-             System.out.println(role.toString());
-         }
+        //  for(JSONObject role:roles){
+        //      System.out.println(role.toString());
+        //  }
 
         List<JSONObject> forms = (List<JSONObject>) jsonObject.get("Forms");
         for(Object form:forms){
@@ -61,30 +61,68 @@ public class Main {
 
         // USER TABLE
         // CREATE
-//         DbTable users = schema.addTable("Users");
-//         DbColumn user_id = Roles.addColumn("user_id", "number", null);
-//         DbColumn user_name = Roles.addColumn("user_name", "varchar", 255);
-//         DbColumn role_id_users = Roles.addColumn("role_id", "number", null);
-//         DbColumn user_email = Roles.addColumn("user_email", "varchar", 255);
-//         String createUsersTable =
-//                 new CreateTableQuery(users, true)
-//                         .validate().toString();
-//         System.out.println(createUsersTable);
+        DbTable users = schema.addTable("Users");
+        DbColumn user_id = users.addColumn("user_id", "number", null);
+        DbColumn user_name = users.addColumn("user_name", "varchar", 255);
+        DbColumn role_id_users = users.addColumn("role_id", "number", null);
+        DbColumn user_email = users.addColumn("user_email", "varchar", 255);
+        String createUsersTable =
+                new CreateTableQuery(users, true)
+                        .validate().toString();
+        System.out.println(createUsersTable);
 
 
-//         // FORM TABLE
-//         // CREATE
-//         DbTable forms = schema.addTable("Forms");
-//         DbColumn form_id = forms.addColumn("form_id", "number", null);
-//         DbColumn form_name = forms.addColumn("form_name", "varchar", 255);
-//         String createFormsTable =
-//                 new CreateTableQuery(forms, true)
-//                         .validate().toString();
-//         System.out.println(createFormsTable);
+        // FORM TABLE
+        // CREATE
+        DbTable Forms = schema.addTable("Forms");
+        DbColumn form_id = Forms.addColumn("form_id", "number", null);
+        DbColumn form_name = Forms.addColumn("form_name", "varchar", 255);
+        String createFormsTable =
+                new CreateTableQuery(Forms, true)
+                        .validate().toString();
+        System.out.println(createFormsTable);
+
+        // POPULATE
+        for(JSONObject form: forms)
+        {
+                String insertFormQuery =
+                new InsertQuery(Forms)
+                .addColumn(form_id, form.get("formId"))
+                .addColumn(form_name, form.get("formName"))
+                .validate().toString();
+
+                System.out.println(insertFormQuery);
+        }
 
 
+        // FORM_FIELDS TABLE
+        // CREATE
+        DbTable Form_fields = schema.addTable("Form_fields");
+        DbColumn field_id = Form_fields.addColumn("field_id", "number", null);
+        DbColumn field_form_id = Form_fields.addColumn("form_id", "number", null);
+        DbColumn field_name = Form_fields.addColumn("field_name", "varchar", 255);
+        DbColumn field_type = Form_fields.addColumn("field_type", "varchar", 255);
+        String createFieldsTable =
+                new CreateTableQuery(Form_fields, true)
+                        .validate().toString();
+        System.out.println(createFieldsTable);
 
+        // POPULATE
+        for(JSONObject form: forms) 
+        {
+                for(JSONObject form_fields:  (List<JSONObject>)form.get("formFields"))
+                {
+                        String insertFieldQuery =
+                        new InsertQuery(Form_fields)
+                        .addColumn(field_id, form_fields.get("fieldId"))
+                        .addColumn(field_name, form_fields.get("fieldName"))
+                        .addColumn(field_form_id, form.get("formId"))
+                        .addColumn(field_type, form_fields.get("fieldType"))
+                        .validate().toString();
 
+                        System.out.println(insertFieldQuery);
+                }
+        }
 
 
 
