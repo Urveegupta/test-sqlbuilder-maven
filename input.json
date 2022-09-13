@@ -1,0 +1,52 @@
+{
+  "Roles":[
+    {
+      "id": 1,
+      "name": "Student"
+    },
+    {
+      "id": 2,
+      "name": "HOD"
+    },
+    {
+      "id": 3,
+      "name": "Dean"
+    }
+
+  ],
+
+  "Forms":[
+    {
+      "formId": 1,
+      "formName": "leaveForm",
+      "formFields": [
+        {
+          "fieldId": 1,
+          "fieldName": "studentName",
+          "fieldType": "String"
+        },
+        {
+          "fieldId": 2,
+          "fieldName": "studentBatch",
+          "fieldType": "INT"
+        }
+      ]
+    }
+  ],
+
+  "Status":[
+    {
+      "statusId": 1,
+      "name": "PDA",
+      "description": "pending advisor approval",
+      "roleId": ""
+    },
+    {
+      "statusId": 2,
+      "name": "Draft",
+      "description": "not submitted by the sudent",
+      "roleId": ""
+    }
+  ]
+
+}

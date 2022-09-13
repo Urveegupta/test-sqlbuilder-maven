@@ -21,6 +21,11 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/resources/sqlbuilder-3.0.2.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
     </dependencies>
 
 </project>
