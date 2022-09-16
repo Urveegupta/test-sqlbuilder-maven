@@ -125,6 +125,19 @@ public class Main {
         }
 
 
+        // CREATING DYNAMIC TABLES
+        for(JSONObject table: forms)
+        {
+                DbTable _table = schema.addTable((String)table.get("formName"));
+                for(JSONObject form_fields: (List<JSONObject>)table.get("formFields"))
+                {
+                        DbColumn col = _table.addColumn((String)form_fields.get("fieldName"), (String)form_fields.get("fieldType"), null);
+                }
+                String createTable =
+                new CreateTableQuery(_table, true)
+                        .validate().toString();
+                System.out.println(createTable);
+        }
 
 
 
