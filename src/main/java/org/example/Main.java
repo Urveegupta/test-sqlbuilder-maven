@@ -23,6 +23,7 @@ public class Main {
         //  }
 
         List<JSONObject> forms = (List<JSONObject>) jsonObject.get("Forms");
+        List<JSONObject> statusList = (List<JSONObject>) jsonObject.get("Status");
         for(Object form:forms){
             System.out.println(form.toString());
         }
@@ -46,6 +47,7 @@ public class Main {
                 new CreateTableQuery(Roles, true)
                         .validate().toString();
         System.out.println(createRolesTable);
+        out.println(createRolesTable);
         // POPULATE
         for(JSONObject role: roles)
         {
@@ -56,6 +58,7 @@ public class Main {
                 .validate().toString();
 
                 System.out.println(insertCustomerQuery);
+                out.println(insertCustomerQuery);
         }
 
 
@@ -70,6 +73,7 @@ public class Main {
                 new CreateTableQuery(users, true)
                         .validate().toString();
         System.out.println(createUsersTable);
+        out.println(createUsersTable);
 
 
         // FORM TABLE
@@ -81,6 +85,7 @@ public class Main {
                 new CreateTableQuery(Forms, true)
                         .validate().toString();
         System.out.println(createFormsTable);
+        out.println(createFormsTable);
 
         // POPULATE
         for(JSONObject form: forms)
@@ -92,6 +97,7 @@ public class Main {
                 .validate().toString();
 
                 System.out.println(insertFormQuery);
+                out.println(insertFormQuery);
         }
 
 
@@ -106,6 +112,7 @@ public class Main {
                 new CreateTableQuery(Form_fields, true)
                         .validate().toString();
         System.out.println(createFieldsTable);
+        out.println(createFieldsTable);
 
         // POPULATE
         for(JSONObject form: forms) 
@@ -121,8 +128,38 @@ public class Main {
                         .validate().toString();
 
                         System.out.println(insertFieldQuery);
+                        out.println(insertFieldQuery);
                 }
         }
+
+
+        // STATUS TABLE
+        // CREATE
+        DbTable status = schema.addTable("Status");
+        DbColumn status_id = status.addColumn("status_id", "number", null);
+        DbColumn name = status.addColumn("name", "varchar", 255);
+        DbColumn description = status.addColumn("description", "varchar", 255);
+        DbColumn allowed_role_id = status.addColumn("allowed_role_id", "number", null);
+        String createStatusTable =
+                new CreateTableQuery(status, true)
+                        .validate().toString();
+        System.out.println(createStatusTable);
+        out.println(createStatusTable);
+        // POPULATE STATUS TABLE
+        for(JSONObject status_obj: statusList)
+        {
+            String insertCustomerQuery =
+                    new InsertQuery(status)
+                            .addColumn(status_id, status_obj.get("statusId"))
+                            .addColumn(name, status_obj.get("name"))
+                            .addColumn(description, status_obj.get("description"))
+                            .addColumn(allowed_role_id, status_obj.get("roleId"))
+                            .validate().toString();
+            System.out.println(insertCustomerQuery);
+            out.println(insertCustomerQuery);
+        }
+        out.close();
+
 
 
         // CREATING DYNAMIC TABLES
@@ -138,12 +175,6 @@ public class Main {
                         .validate().toString();
                 System.out.println(createTable);
         }
-
-
-
-
-
-
 
 
 
