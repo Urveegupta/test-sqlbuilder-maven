@@ -23,7 +23,7 @@
         {
           "fieldId": 1,
           "fieldName": "studentName",
-          "fieldType": "String"
+          "fieldType": "varchar(255)"
         },
         {
           "fieldId": 2,

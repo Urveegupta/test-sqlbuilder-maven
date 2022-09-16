@@ -158,7 +158,7 @@ public class Main {
             System.out.println(insertCustomerQuery);
             out.println(insertCustomerQuery);
         }
-        out.close();
+        
 
 
 
@@ -174,10 +174,11 @@ public class Main {
                 new CreateTableQuery(_table, true)
                         .validate().toString();
                 System.out.println(createTable);
+                out.println(createTable);
         }
 
 
-
+        out.close();
 
 
 //         // add table with basic customer info
