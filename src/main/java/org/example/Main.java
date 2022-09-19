@@ -7,6 +7,20 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+
+import java.lang.reflect.Field;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
+
 import org.json.simple.*;
 import org.json.simple.parser.*;
 public class Main {
@@ -179,6 +193,31 @@ public class Main {
 
 
         out.close();
+
+
+
+        // creating database connection
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        int changecount = 0;
+        conn = null;
+
+        try {
+            // DriverManager.registerDriver(new com.mysql.jdbc.Driver ());
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/employees",
+                    "root", "adityaaddy");
+
+            // Do something with the Connection
+            System.out.println("connection established!!");
+
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+
 
 
 //         // add table with basic customer info
